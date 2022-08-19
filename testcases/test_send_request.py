@@ -1,21 +1,26 @@
+import json
+import re
+
 import requests
 
-class TestSendRequest:
-    url='https://azalea-tech.com/dev/qiaotou-workpoint/api/admin/form-login'
-    data={
-        'password':'123',
-        'username':'developer'
-    }
-    headers={
-        'Content-Type': 'application/json',
-    }
-    #疑问：为什么传参传的是json而不是data
-    # 使用data，传的是Content-Type 字段的值被设置为 application/x-www-form-urlencoded
-    # 使用json，传的Content-Type 字段的值被设置为 application/json
-    rep=requests.post(url=url,json=data,headers=headers)
-    print(rep.status_code)
-    print(rep.text)
+class TestProductApi:
 
+    access_token = ""
+    session = requests.session() #通过session去关联，session默认情况下会自动关联cookie
 
-# 使用pytest框架，
-# py文件必须是以test_开头或者_test结尾；类名必须以Test开头；测试用例必须以tets_开头
+    def test_get_token(self):
+         print("获取token鉴权码")
+         urls = "https://api.weixin.qq.com/cgi-bin/token"
+         datas = {
+              "grant_type":"client_credential",
+              "appid":"wx8e8b67ced3c4b884",
+              "secret":"27c524bd9ca932e31e229be30b0a805b"
+         }
+         res = TestProductApi.session.request("get",url=urls,params=datas)
+         TestProductApi.access_token = res.json()['access_token']#截取返回的json中的access_token
+         print(TestProductApi.access_token)
+
+#创建实例gettoken
+gettoken=TestProductApi()
+#调用test_get_token方法
+gettoken.test_get_token()
