@@ -14,7 +14,7 @@ class TestProductApi:
          datas = {
               "grant_type":"client_credential",
               "appid":"wx8e8b67ced3c4b884",
-              "secret":"27c524bd9ca932e31e229be30b0a805b"
+              "secret":"xxxx"
          }
          res = TestProductApi.session.request("get",url=urls,params=datas)
          TestProductApi.access_token = res.json()['access_token']#截取返回的json中的access_token
