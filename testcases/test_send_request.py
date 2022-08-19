@@ -24,3 +24,25 @@ class TestProductApi:
 gettoken=TestProductApi()
 #调用test_get_token方法
 gettoken.test_get_token()
+
+#自己写，获取到一个网站的token
+
+class getToken:
+    # 设置成全局变量，在其他方法中也能获取到，通过类名访问
+    token=""
+
+    def testLogin(self):
+        url="https://xxxx.com/dev/xxxx-workpoint/api/admin/form-login"
+        data={
+            "password":'xxxx',
+            "username":"xxx"
+        }
+        headers={
+            "content-type":"application/json"
+        }
+        res=requests.post(url=url,json=data,headers=headers)
+        getToken.token=res.text
+        print(getToken.token)
+
+token=getToken()
+token.testLogin()
